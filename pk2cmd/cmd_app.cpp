@@ -84,12 +84,9 @@ void Ccmd_app::PK2_CMD_Entry(int argc, _TCHAR* argv[])
 		return;
 	}
 	else
-	{ // no -B, check PATH
-		_tsearchenv_s("PK2DeviceFile.dat", "PATH", tempString);
-		if (_tcslen(tempString) < 17)
-		{
-			_tcsncpy_s(tempString, "PK2DeviceFile.dat", 17);
-		}
+	{ // no -B, check exactly in the place where `make install` put it
+        char device_file_path[] = "/usr/share/pk2/PK2DeviceFile.dat";
+        _tcsncpy_s(tempString, device_file_path, sizeof(device_file_path));
 	}
 	if (!PicFuncs.ReadDeviceFile(tempString))
 	{
